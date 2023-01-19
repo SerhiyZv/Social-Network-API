@@ -1,0 +1,30 @@
+{
+    "name": "Social-Network-API",
+    "version": "1.0.0",
+    "description": "Social Network API application using Express.js, MongoDB and Mongoose ODB",
+    "main": "server.js",
+    "license": "MIT",
+    "scripts": {
+      "start": "node server.js",
+      "dev": "nodemon index",
+      "seed": "node utils/seed"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/SerhiyZv/Social-Network-API.git"
+    },
+    "keywords": [],
+    "author": "Serhiy Zvedenyuk",
+    "bugs": {
+    "url": "https://github.com/SerhiyZv/Social-Network-API/issues"
+  },
+  "homepage": "https://github.com/SerhiyZv/Social-Network-API#readme",
+    "dependencies": {
+      "express": "^4.17.1",
+      "mongoose": "^6.0.13",
+      "moment": "2.29.4"
+    },
+    "devDependencies": {
+      "nodemon": "^2.0.9"
+    }
+  }
