@@ -48,7 +48,7 @@ const thoughtController = {
     },
     // PUT to update thought by ID
     updateThought({ params, body }, res) {
-        Thought.findOneAndUpdate({ _id: params.id }, body, {
+        Thought.findOneAndUpdate({ _id: params.thoughtId }, body, {
             new: true, 
             runValidators: true,
         })
@@ -68,8 +68,9 @@ const thoughtController = {
             if (!deletedThought) {
               return res.status(404).json({ message: "No thought with this id! " });
             }
-            return User.findOneAndUpdate(
-              { _id: params.userId },
+            console.log(deletedThought);
+            User.findOneAndUpdate(
+              { username: deletedThought.username },
               { $pull: { thoughts: params.thoughtId } },
               { new: true }
             );

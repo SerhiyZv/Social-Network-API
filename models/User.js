@@ -1,6 +1,8 @@
-const { Schema, model } = require("mongoose");
-
-const UserSchema = new Schema(
+const Thought = require('./Thought');
+const { Schema, model } = require('mongoose');
+const mongoose = require("mongoose");
+mongoose.set('strictQuery', false);
+const userSchema = new Schema(
     {
         username: {
             type: String,
@@ -17,15 +19,17 @@ const UserSchema = new Schema(
         thoughts: [
             {
             type: Schema.Types.ObjectId,
-            ref: "Thought",
+            ref: 'Thought',
             },
         ],
         friends: [
             {
                 type: Schema.Types.ObjectId,
-                ref: "User",
+                ref: 'User',
             }
         ],
+    },
+    {    
         toJSON: {
             virtuals: true
         },
@@ -33,10 +37,18 @@ const UserSchema = new Schema(
     }
 )
 
-UserSchema.virtual("friendCount").get(function () {
+userSchema.virtual('friendCount').get(function () {
     return this.friends.length;
-})
+});
 
-const User = model("User", UserSchema);
+// BONUS
+userSchema.pre("findOneAndDelete", { document: false, query: true }, async function() {
+    console.log("User pre-delete");
+    const doc = await this.model.findOne(this.getFilter());
+    console.log(doc.username);
+    await Thought.deleteMany({ username: doc.username });
+});
+
+const User = model('User', userSchema);
 
 module.exports = User;
