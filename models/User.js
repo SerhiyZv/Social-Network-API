@@ -5,7 +5,7 @@ const UserSchema = new Schema(
         username: {
             type: String,
             unique: true,
-            required: "You need to provide a username!",
+            required: true,
             trim: true
         },
         email: {
@@ -22,7 +22,7 @@ const UserSchema = new Schema(
         ],
         friends: [
             {
-                type: Schema.Type.ObjectId,
+                type: Schema.Types.ObjectId,
                 ref: "User",
             }
         ],
