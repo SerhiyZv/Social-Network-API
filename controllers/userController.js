@@ -10,14 +10,15 @@ const userController = {
             .then((dbUserData) => res.json(dbUserData))
             .catch((err) => {
                 console.log(err);
-                res.status(400).json(err);
+                res.status(500).json(err);
             });
     },
 
     //GEt User by ID and populate thoughts and friend data
     getUserById({ param }, res) {
         User.findOne({ _id: param.id })
-        .populate({ path: "thoughts", })
+        .select('-__v')
+        .populate( "thoughts" )
         .populate({ path: "friends", })
         .then((dbUserData) => {
             if (!dbUserData) {

@@ -6,22 +6,18 @@ const ThoughtSchema = new Schema(
     {
         thoughtText: {
             type: String,
-            required: true,
+            required: "Your thought must be between 1 and 280 characters!",
             minLength: 1,
             maxLength: 280
         },
         createdAt: {
             type: Date,
             default: Date.now,
-            get: createAtVal => dateFormat(createAtVal)
+            get: (createAtVal) => dateFormat(createAtVal)
         },
         username: {
             type: String,
             required: true
-        },
-        userId: {
-            type: Schema.Types.ObjectId,
-            ref: "User"
         },
         reactions: [{
             type: reactionSchema,
@@ -29,7 +25,7 @@ const ThoughtSchema = new Schema(
     }
 )
 
-ThoughtSchema.virtual("reactionCount").get(function() {
+ThoughtSchema.virtual("reactionCount").get(function () {
     return this.reactions.length;
 });
 
