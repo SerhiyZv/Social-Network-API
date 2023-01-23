@@ -54,7 +54,7 @@ const thoughtController = {
 
     // PUT to update thought by ID
     updateThought({ params, body }, res) {
-        Thought.findOneAndUpdate({ _id: params.thoughtId }, body, {
+        Thought.findOneAndUpdate({ _id: params.id }, body, {
             new: true, 
             runValidators: true,
         })
