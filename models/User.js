@@ -1,7 +1,6 @@
 const Thought = require('./Thought');
 const { Schema, model } = require('mongoose');
-const mongoose = require("mongoose");
-mongoose.set('strictQuery', false);
+
 const userSchema = new Schema(
     {
         username: {

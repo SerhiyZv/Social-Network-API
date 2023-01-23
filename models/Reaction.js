@@ -1,7 +1,5 @@
 const { Schema, Types } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
-const mongoose = require("mongoose");
-mongoose.set('strictQuery', false);
 
 const ReactionSchema = new Schema(
     {

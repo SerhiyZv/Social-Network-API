@@ -1,8 +1,7 @@
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 const reactionSchema = require('./Reaction');
-const mongoose = require("mongoose");
-mongoose.set('strictQuery', false);
+
 const thoughtSchema = new Schema(
     {
         thoughtText: {
