@@ -29,24 +29,26 @@ const thoughtController = {
         });
     },
     //POST Create new thought
-    addThought({params, body}, res) {
-        Thought.create(body)
-        .then((_id) => {
+    addThought(req, res) {
+        Thought.create(req.body)
+        .then((dbThoughtData) => {
             return User.findOneAndUpdate(
-                { _id: params.userId },
-                { $push: {thoughts: _id } },
+                { _id: req.body.userId },
+                { $push: {thoughts: dbThoughtData._id } },
                 { new: true }
             );
         })
-        .then((dbThoughtData) => {
-            console.log(dbThoughtData);
-            if (!dbThoughtData) {
-                res.status(404).json({ message: "Thought created but no user with this id!" });
-                return;
+        .then((dbUserData) => {
+            if (!dbUserData) {
+                return res
+                .status(404)
+                .json({ message: "Thought created but no user with this id!" });
             }
-            res.json(dbThoughtData);
+            res.json({ message: "Thought successfully created!" });
         })
-        .catch((err) => res.json(err));
+        .catch((err) => {
+            res.status(500).json(err);
+        });
     },
 
     // PUT to update thought by ID
