@@ -16,7 +16,8 @@ const thoughtController = {
     //GET thought by ID
     getThoughtById({ params }, res) {
         Thought.findOne({ _id: params.id })
-        .populate({path: "thoughts"})
+        .populate({ path: "reactions", select: "-__v", })
+        .select("-__v")
         .then((dbThoughData) => {
             if (!dbThoughData) {
                 res.status(404).json({ message: "No thought found by that id!"});
