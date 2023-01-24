@@ -49,17 +49,19 @@ const userController = {
     },
     //DELETE to remove user _id
     deleteUser({ params }, res) {
-        User.findOneAndDelete({ _id: params.userId })
+        User.findOneAndDelete({ _id: params.id })
             .then((dbUserData) => {
                 if(!dbUserData) {
-                    res.status(404).json({ message: "No user found with this id!" });
-                    return;
+                    return res.status(404).json({ message: "No user found with this id!" });
                 }
-                res.json(dbUserData);
+                // BONUS: get ids of user's `thoughts` and delete them all
+        // $in to find specific things
+        return Thought.deleteMany({ _id: { $in: dbUserData.thoughts } });
             })
-            .catch((err) => {
-                res.status(400).json(err);
-            })
+            .then(() => {
+                res.json({ message: "User and associated thoughts deleted!" });
+              })
+            .catch((err) => res.json(err));
     },
     //POST Add new friend to user's friend list
     addFriend({ params, body }, res) {
